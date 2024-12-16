@@ -2,9 +2,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
 require('dotenv').config();
+const fs = require("fs");
+const path = require("path");
 
 // Initialize Firebase Admin
-const serviceAccount = process.env.SERVICE_ACCOUNT_KEY;
+const serviceAccountPath = path.resolve(__dirname, "./keys/serviceAccountKey.json");
+
+// Read and parse the file
+const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf-8"));
+console.log(serviceAccount);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
